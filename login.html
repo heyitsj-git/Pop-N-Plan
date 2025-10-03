@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Committee Login/Registration Portal - POP N' PLAN</title>
+  <link rel="icon" type="image/png" href="logo.png">
+  <link rel="stylesheet" href="login.css" />
+  <script src="login.js" defer></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="background-bubbles"></div>
+
+  <div class="container" id="container">
+    <!-- Registration -->
+    <div class="form-container sign-up">
+      <form id="registerForm">
+        <div class="brand-badge">
+          <img src="logo.png" class="brand-logo" alt="POP N' PLAN Logo">
+          <span class="brand-text">POP N' PLAN</span>
+        </div>
+        <h1>College/Committee Registration</h1>
+        <p class="note">Only College/Committee's Admin must register!</p>
+
+        <input name="college" type="text" placeholder="College Name" required />
+        <input name="committee" type="text" placeholder="Committee Name" required />
+        <input name="email" type="email" placeholder="Official Email Id" required />
+        <input name="contact" type="text" placeholder="Contact Number" required />
+        <input name="password" type="password" placeholder="Password" required />
+        <input name="confirmPassword" type="password" placeholder="Confirm Password" required />
+
+        <button type="submit">Register</button>
+
+        <p class="or">or register with</p>
+        <div class="social-container">
+          <a href="#" class="social google"><i class="fa-brands fa-google"></i> Google</a>
+          <a href="#" class="social apple"><i class="fa-brands fa-apple"></i> Apple</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Login -->
+    <div class="form-container sign-in">
+      <form id="loginForm">
+        <div class="brand-badge">
+          <img src="logo.png" class="brand-logo" alt="POP N' PLAN Logo">
+          <span class="brand-text">POP N' PLAN</span>
+        </div>
+        <h1>Committee Admin Login</h1>
+
+        <input name="email" type="email" placeholder="Email" required />
+        <input name="password" type="password" placeholder="Password" required />
+
+        <a href="#">Forgot your password?</a>
+        <button type="submit">Login</button>
+
+        <p class="or">or login with</p>
+        <div class="social-container">
+          <a href="#" class="social google"><i class="fa-brands fa-google"></i> Google</a>
+          <a href="#" class="social apple"><i class="fa-brands fa-apple"></i> Apple</a>
+        </div>
+      </form>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Already Registered?</h1>
+          <p>Login to manage your committee’s events and members</p>
+          <button class="ghost" id="loginBtn">Login</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>New Committee?</h1>
+          <p>Register your college committee and start organizing with POP N' PLAN</p>
+          <button class="ghost" id="registerBtn">Register</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Font Awesome Kit -->
+  <script src="https://kit.fontawesome.com/a2d9d6e64b.js" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings - POP N' PLAN</title>
+  <link rel="icon" href="logo.png" type="image/x-icon">
+  <link rel="stylesheet" href="sett.css">
+</head>
+<body>
+  <div class="settings-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="brand">
+        <img src="logo.png" alt="POP N' PLAN">
+        <h1>POP N' PLAN</h1>
+      </div>
+      <nav>
+        <ul>
+          <li class="active" data-target="profile">Profile</li>
+          <li data-target="password">Password</li>
+          <li data-target="preferences">Preferences</li>
+          <li data-target="privacy">Data Privacy & Security</li>
+          <li data-target="account">Account</li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="settings-content">
+
+      <!-- PROFILE -->
+      <section class="settings-panel" id="profile">
+        <h2>Profile Info</h2>
+        <div class="profile-pic">
+          <img id="profileImage" src="default-avatar.png" alt="Profile Picture"/>
+          <input type="file" id="uploadPic" accept="image/*"/>
+        </div>
+        <input type="text" id="name" placeholder="Full Name">
+        <input type="email" id="email" placeholder="Email">
+      </section>
+
+      <!-- PASSWORD -->
+      <section class="settings-panel" id="password">
+        <h2>Change Password</h2>
+        <input type="password" id="currentPass" placeholder="Current Password">
+        <input type="password" id="newPass" placeholder="New Password">
+        <input type="password" id="confirmPass" placeholder="Confirm New Password">
+      </section>
+
+      <!-- PREFERENCES -->
+      <section class="settings-panel" id="preferences">
+        <h2>Preferences</h2>
+        <label><input type="checkbox" id="darkMode"> Enable Dark Mode</label>
+        <label><input type="checkbox" id="notifications"> Enable Notifications</label>
+        <label for="language">Language:</label>
+        <select id="language">
+          <option value="en">English</option>
+          <option value="hi">Hindi</option>
+          <option value="es">Spanish</option>
+        </select>
+      </section>
+
+      <!-- DATA PRIVACY & SECURITY -->
+      <section class="settings-panel" id="privacy">
+        <h2>Data Privacy & Security</h2>
+        <label><input type="checkbox" id="tracking"> Allow Tracking & Analytics</label>
+        <label><input type="checkbox" id="adPersonalization"> Personalized Ads</label>
+        <label for="twoFA">Two-Factor Authentication:</label>
+        <select id="twoFA">
+          <option value="off">Off</option>
+          <option value="sms">SMS</option>
+          <option value="authApp">Authenticator App</option>
+        </select>
+      </section>
+
+      <!-- ACCOUNT -->
+      <section class="settings-panel" id="account">
+        <h2>Account</h2>
+        <button class="danger" id="deleteAccount">Delete Account</button>
+        <button id="logout">Logout</button>
+      </section>
+
+      <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+
+    </main>
+
+  </div>
+
+  <script>
+    // SIDEBAR NAVIGATION
+const sections = document.querySelectorAll('.settings-panel');
+const navItems = document.querySelectorAll('.sidebar nav li');
+
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    // Remove active class from all nav items
+    navItems.forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+
+    // Show selected panel
+    const target = item.getAttribute('data-target');
+    sections.forEach(s => s.classList.remove('active'));
+    document.getElementById(target).classList.add('active');
+  });
+});
+
+// Load saved settings
+window.onload = function() {
+  // Profile info
+  if(localStorage.getItem('name')) document.getElementById('name').value = localStorage.getItem('name');
+  if(localStorage.getItem('email')) document.getElementById('email').value = localStorage.getItem('email');
+  if(localStorage.getItem('profileImage')) document.getElementById('profileImage').src = localStorage.getItem('profileImage');
+
+  // Preferences
+  if(localStorage.getItem('darkMode') === 'true') {
+    document.getElementById('darkMode').checked = true;
+    applyDarkMode();
+  }
+  if(localStorage.getItem('notifications') === 'true') document.getElementById('notifications').checked = true;
+  if(localStorage.getItem('language')) document.getElementById('language').value = localStorage.getItem('language');
+
+  // Privacy
+  if(localStorage.getItem('tracking') === 'true') document.getElementById('tracking').checked = true;
+  if(localStorage.getItem('adPersonalization') === 'true') document.getElementById('adPersonalization').checked = true;
+  if(localStorage.getItem('twoFA')) document.getElementById('twoFA').value = localStorage.getItem('twoFA');
+
+  // Show default panel
+  document.getElementById('profile').classList.add('active');
+};
+
+// Save settings
+function saveSettings() {
+  // Profile
+  localStorage.setItem('name', document.getElementById('name').value);
+  localStorage.setItem('email', document.getElementById('email').value);
+  localStorage.setItem('profileImage', document.getElementById('profileImage').src);
+
+  // Preferences
+  localStorage.setItem('darkMode', document.getElementById('darkMode').checked);
+  localStorage.setItem('notifications', document.getElementById('notifications').checked);
+  localStorage.setItem('language', document.getElementById('language').value);
+
+  // Privacy
+  localStorage.setItem('tracking', document.getElementById('tracking').checked);
+  localStorage.setItem('adPersonalization', document.getElementById('adPersonalization').checked);
+  localStorage.setItem('twoFA', document.getElementById('twoFA').value);
+
+  alert("Settings saved successfully!");
+  applyDarkMode();
+}
+
+// Apply dark mode immediately
+function applyDarkMode() {
+  if(document.getElementById('darkMode').checked) {
+    document.body.style.background = '#17171a';
+    document.body.style.color = '#fff';
+  } else {
+    document.body.style.background = '#f7f5ff';
+    document.body.style.color = '#17171a';
+  }
+}
+
+// Upload profile picture
+document.getElementById('uploadPic').addEventListener('change', function() {
+  const file = this.files[0];
+  if(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('profileImage').src = e.target.result;
+      localStorage.setItem('profileImage', e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+// Delete account
+document.getElementById('deleteAccount').addEventListener('click', function() {
+  if(confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+    localStorage.clear();
+    alert("Account deleted!");
+    location.reload();
+  }
+});
+
+// Logout
+document.getElementById('logout').addEventListener('click', function() {
+  alert("Logged out successfully!");
+  location.reload();
+});
+
+  </script>
+</body>
+</html>

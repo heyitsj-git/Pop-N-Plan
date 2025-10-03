@@ -1,0 +1,219 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Saira', sans-serif;
+  background: #fdfdff;
+  color: #2c2c2c;
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+  z-index: 1000;
+}
+.navbar-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+}
+.navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo {
+  width: 45px;
+  transition: transform 0.6s ease;
+}
+.logo:hover {
+  transform: scale(1.1) rotateY(180deg);
+}
+.navbar-links {
+  display: flex;
+  gap: 25px;
+  list-style: none;
+}
+.navbar-links li {
+  position: relative;
+}
+.navbar-links a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #333;
+  transition: color 0.3s;
+}
+.navbar-links a:hover {
+  color: #6c5ce7;
+}
+
+/* Mega Menu */
+.mega-menu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  display: none;
+  flex-direction: column;
+  min-width: 200px;
+  padding: 15px;
+}
+.dropdown:hover .mega-menu {
+  display: flex;
+}
+.mega-menu a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #444;
+  transition: background 0.3s;
+}
+.mega-menu a:hover {
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+  color: #000;
+}
+
+/* Buttons */
+.cta-btn, .hero-btn {
+  padding: 10px 22px;
+  border-radius: 25px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+}
+.cta-btn {
+  background: linear-gradient(135deg, #ff4fc0, #ffe66d);
+  color: #fff;
+}
+.cta-btn:hover {
+  background: transparent;
+  border: 2px solid #ff4fc0;
+  color: #ff4fc0;
+}
+.hero-btn {
+  background: linear-gradient(135deg, #6c5ce7, #74b9ff);
+  color: #fff;
+}
+.hero-btn:hover {
+  background: transparent;
+  border: 2px solid #6c5ce7;
+  color: #6c5ce7;
+}
+
+/* Hero Section */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 100px auto 60px;
+  padding: 30px;
+}
+.hero-text h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+}
+.hero-text p {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+}
+.hero-image img {
+  width: 380px;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+}
+
+/* About Section */
+.about {
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 30px;
+  text-align: center;
+}
+.about h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #2c2c2c;
+}
+.about p {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  color: #555;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+.about-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: left;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+  transition: transform 0.3s ease;
+}
+.about-card:hover {
+  transform: translateY(-8px);
+}
+.contact a {
+  color: #ff4fc0;
+  text-decoration: none;
+}
+.contact a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+footer {
+  background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+  text-align: center;
+  padding: 20px;
+  font-weight: 500;
+  color: #333;
+  border-top: 3px solid #fff;
+}
+
+/* Floating Shapes */
+.floating-shapes .shape {
+  position: fixed;
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #ff4fc0, #74b9ff);
+  border-radius: 12px;
+  opacity: 0.3;
+  animation: float 12s infinite;
+}
+.shape:nth-child(1) { top: 10%; left: 15%; animation-delay: 0s; }
+.shape:nth-child(2) { top: 40%; left: 80%; animation-delay: 3s; }
+.shape:nth-child(3) { top: 70%; left: 20%; animation-delay: 6s; }
+.shape:nth-child(4) { top: 85%; left: 65%; animation-delay: 9s; }
+@keyframes float {
+  0% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-30px) rotate(180deg); }
+  100% { transform: translateY(0) rotate(360deg); }
+}
