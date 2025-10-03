@@ -1,56 +1,52 @@
-// server.js
-require('dotenv').config(); // Load environment variables
-
+// api/server.js
 const express = require('express');
+const serverless = require('serverless-http');
 const mongoose = require('mongoose');
-const path = require('path');
-const cors = require('cors');
+const bodyParser = require('body-parser');
+require('dotenv').config();
 
 const app = express();
 
-// --- Middleware ---
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// --- Config ---
+// MongoDB Connection
 const MONGO_URI = process.env.MONGO_URI;
-const PORT = process.env.PORT || 5000;
+let isConnected = false;
 
-if (!MONGO_URI) {
-  console.error("❌ Error: MONGO_URI is not defined in your .env file.");
-  process.exit(1);
-}
-
-// --- Database Connection ---
-mongoose.connect(MONGO_URI)
-  .then(() => {
-    console.log('✅ MongoDB connected successfully to Atlas!');
-
-    // --- Routes ---
-
-    // Serve static files (HTML, CSS, JS, images, etc.)
-    app.use(express.static(path.join(__dirname)));
-
-    // API routes
-    app.use('/api/auth', require('./auth'));
-
-    // Serve admin.html at /admin
-    app.get('/admin', (req, res) => {
-      res.sendFile(path.join(__dirname, 'admin.html'));
+const connectDB = async () => {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(MONGO_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
     });
+    isConnected = true;
+    console.log('MongoDB connected');
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+  }
+};
 
-    // Fallback: Serve login.html for all other routes
-    app.use((req, res) => {
-      res.sendFile(path.join(__dirname, 'login.html'));
-    });
+// Middleware to ensure DB connection
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
 
-    // --- Start Server ---
-    app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
-    });
-  })
-  .catch(err => {
-    console.error('❌ MongoDB connection error:', err.message);
-    process.exit(1);
-  });
+// Example Routes
+app.get('/api/hello', (req, res) => {
+  res.json({ message: 'Hello from Vercel serverless!' });
+});
+
+// Example POST route
+app.post('/api/data', (req, res) => {
+  const { name, email } = req.body;
+  res.json({ success: true, name, email });
+});
+
+// Export as serverless function
+module.exports = serverless(app);
+
+
