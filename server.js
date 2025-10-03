@@ -1,4 +1,4 @@
-// api/server.js
+// server.js
 const express = require('express');
 const serverless = require('serverless-http');
 const mongoose = require('mongoose');
@@ -40,7 +40,6 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hello from Vercel serverless!' });
 });
 
-// Example POST route
 app.post('/api/data', (req, res) => {
   const { name, email } = req.body;
   res.json({ success: true, name, email });
@@ -48,5 +47,3 @@ app.post('/api/data', (req, res) => {
 
 // Export as serverless function
 module.exports = serverless(app);
-
-
